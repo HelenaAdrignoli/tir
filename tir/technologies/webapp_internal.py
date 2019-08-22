@@ -2296,6 +2296,11 @@ class WebappInternal(Base):
                     time.sleep(1)
                     if class_grid != "tgrid":
                         self.send_keys(clicking_row_element(),Keys.ENTER)
+                        checkimg = str(current)
+                        while checkimg.find('lbno_mdi.png') == -1:
+                            current = next(iter(get_current()), None)
+                            checkimg = str(current)
+                            self.send_keys(clicking_row_element(),Keys.ENTER)
                     else:
                         self.double_click(clicking_row_element())
                     #contents.remove(text)
