@@ -2734,7 +2734,7 @@ class WebappInternal(Base):
         """
         self.grid_check.append([line, column, value, grid_number])
 
-    def LoadGrid(self):
+    def LoadGrid(self, tcbrowse=True):
         """
         This method is responsible for running all actions of the input and check queues
         of a grid. After running, the queues would be empty.
@@ -2768,7 +2768,7 @@ class WebappInternal(Base):
                 self.new_grid_line(field)
             else:
                 print(f"Filling grid field: {field[0]}")
-                self.fill_grid(field, x3_dictionaries, initial_layer)
+                self.fill_grid(field, x3_dictionaries, initial_layer, tcbrowse)
 
         for field in self.grid_check:
             print(f"Checking grid field value: {field[1]}")
@@ -2798,7 +2798,7 @@ class WebappInternal(Base):
             x3_dictionaries = self.get_x3_dictionaries(fields)
         return x3_dictionaries
 
-    def fill_grid(self, field, x3_dictionaries, initial_layer):
+    def fill_grid(self, field, x3_dictionaries, initial_layer, tcbrowse):
         """
         [Internal]
 
@@ -2840,7 +2840,10 @@ class WebappInternal(Base):
         if containers:
             containers = self.zindex_sort(containers, True)
 
-            grids = containers[0].select(".tgetdados, .tgrid, .tcbrowse")
+            if tcbrowse == False:
+                grids = containers[0].select(".tgetdados, .tgrid")
+            else:
+                grids = containers[0].select(".tgetdados, .tgrid, .tcbrowse")
 
             grids = self.filter_displayed_elements(grids)
             if grids:

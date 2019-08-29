@@ -280,7 +280,7 @@ class Webapp():
         >>> oHelper.CheckResult("A1_COD", "000001", grid=True, line=1)
         >>> oHelper.LoadGrid()
         """
-        self.__webapp.LoadGrid()
+        self.__webapp.LoadGrid(tcbrowse)
 
     def LogOff(self):
         """
