@@ -891,6 +891,7 @@ class WebappInternal(Base):
         >>> # Calling the method
         >>> self.search_element_position(field)
         """
+        label = None
         try:
             container = self.get_current_container()
             if not container:
@@ -920,6 +921,9 @@ class WebappInternal(Base):
             position_list = list(map(lambda x:(x[0], self.get_position_from_bs_element(x[1])), enumerate(list_in_range)))
             position_list = list(filter(lambda xy_elem: (xy_elem[1]['y']+width_safe >= xy_label['y'] and xy_elem[1]['x']+height_safe >= xy_label['x']),position_list ))
             distance      = list(map(lambda x:(x[0], self.get_distance(xy_label,x[1])), position_list))
+            if not distance:
+                self.log_error(f"Search element couldn't find input to  {field}")
+
             elem          = min(distance, key = lambda x: x[1])
             elem          = list_in_range[elem[0]]
             if not elem:
